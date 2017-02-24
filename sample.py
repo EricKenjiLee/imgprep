@@ -20,6 +20,9 @@ class Sample(object):
         self.image_pathes = []
         self.images = []
 
+    def crop(self):
+        pass
+
     def load_images(self):
         '''
         Loads microscope images of the sample as numpy arrays and saves the
@@ -37,10 +40,15 @@ class Sample(object):
         # TODO: Save metadata
         # TODO: Maybe rotate the second polarized image by -45°
 
-    def square_detect(image):
+    def square_detect(self, image='all'):
         '''
         Detect a drawn square in the microscope images for later cropping.
         '''
+        if image != all:
+            pass
+        else:
+            for image in self.images:
+                break
         # Copypasted, functionality not guaranteed
         # cols = (image[..., 0] == 255).sum(0)
         # left = cols.argsort()[-2:].min()

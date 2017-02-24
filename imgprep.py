@@ -19,6 +19,7 @@ import sample
 
 
 def main():
+    # TODO: Outsource the parser setup into it's own function
     # Create the argparser
     parser = argparse.ArgumentParser(usage=__doc__)
 
@@ -30,9 +31,13 @@ def main():
     parser.add_argument('images', nargs='+',
                         help='Filenames of images associated to the sample.')
 
+    # Crop?
+    parser.add_argument('-c', '--crop', action='store_true',
+                        help='Crop the image to the size of painted-in squares')
+
     # Show images?
     parser.add_argument('-s', '--show', action='store_true',
-                        help='Shows the imported images. Only use in con-'\
+                        help='Show the imported images. Only use in con-'\
                         'junction with -i.')
 
     # Verbosity?
@@ -45,8 +50,8 @@ def main():
 
     # Generating a specimen
     if args.verbose:
-        print('Generating a new sample named {}'.format(args.sample))
-        print('Starting the script with options {}'.format(args))
+        print('Generating a new sample named "{}"'.format(args.sample))
+        print('Starting the script with options:\n{}'.format(args))
     specimen = sample.Sample(sample_name=args.sample)
 
     # Loading image pathes
@@ -55,13 +60,31 @@ def main():
     specimen.image_pathes = args.images
     specimen.load_images()
 
+#   ----------------------------------------------------------------------------
+
+    # Cropping
+    if args.crop:
+        if args.verbose:
+            print('Starting the cropping process.')
+            print('Detecting the square.')
+        # Square detection
+        for image in specimen.images:
+            specimen.square_detect()
+
+        # Cropping
+        if args.verbose:
+            print('Cropping the images.')
+        for image in specimen.images:
+            specimen.crop()
+
     # Showing the raw images
     if args.show:
         if args.verbose:
             print('Showing the raw images.')
-        for i, image in enumerate(specimen.images):
+        for image in specimen.images:
             plt.imshow(image)
             plt.show()
+
 
 if __name__ == "__main__":
     main()
