@@ -60,7 +60,5 @@ class Sample(object):
         # right = cols.argsort()[-2:].max()
         pass
 
-    # TODO: Recognize the Magnification and calculate scale-bar dimensions
-    # TODO: Recognize the Red square coordinates
     # TODO: Crop the images and place them next to each other
     # TODO: Create three scale-bars and insert them into the images
