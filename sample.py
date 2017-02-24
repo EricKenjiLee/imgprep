@@ -21,6 +21,10 @@ class Sample(object):
         self.images = []
 
     def crop(self):
+        '''
+        Crops the image(s) to the square that was detected. Use only after
+        square_detect() or it has no effect.
+        '''
         pass
 
     def load_images(self):
@@ -37,14 +41,15 @@ class Sample(object):
         else:
             self.images = skimage.io.imread(str(self.image_pathes))
 
+        self.images = skimage.img_as_float(self.images)
         # TODO: Save metadata
         # TODO: Maybe rotate the second polarized image by -45°
 
-    def square_detect(self, image='all'):
+    def square_detect(self, which='all'):
         '''
         Detect a drawn square in the microscope images for later cropping.
         '''
-        if image != all:
+        if which != 'all':
             pass
         else:
             for image in self.images:
